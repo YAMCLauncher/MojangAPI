@@ -8,8 +8,6 @@ namespace MojangApi.Responses
 {
     public class UsernameToUUIDResponse : Response<UsernameToUUIDResponse.ResponseContent>
     {
-        public PlayerUUID UUID { get; private set; }
-
         public UsernameToUUIDResponse(HttpResponseMessage message, string content) : base(message, content)
         {
         }

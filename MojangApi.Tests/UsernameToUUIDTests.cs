@@ -22,7 +22,7 @@ namespace MojangApi.Tests
             var request = new UsernameToUUIDRequest("chang196700");
             var resp = await ClientHelper.RequestAsync(request);
             Assert.True(resp.IsSuccess);
-            Assert.Equal("00992bb84f6949b990dc309476a1426b", resp.UUID.Id);
+            Assert.Equal("00992bb84f6949b990dc309476a1426b", resp.Content.Id);
         }
     }
 }
