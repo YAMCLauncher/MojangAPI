@@ -15,3 +15,9 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+- script: dotnet pack --configuration $(buildConfiguration)
+  displayName: 'dotnet pack $(buildConfiguration)'
+- script: dotnet nuget update source "azure" -u $PAT -p $PAT --configfile ./nuget.config
+  displayName: 'dotnet nuget add source'
+- script: dotnet nuget push --source "azure" --api-key az "./MojangApi/"
+  displayName: 'dotnet nuget push'
