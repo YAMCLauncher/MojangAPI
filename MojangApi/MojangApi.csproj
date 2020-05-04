@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>MojangApi</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>ChangFeng</Authors>
+    <PackageDescription>MojangApi</PackageDescription>
+    <RepositoryUrl>https://github.com/chang196700/MojangApi</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
