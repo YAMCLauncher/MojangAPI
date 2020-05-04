@@ -19,5 +19,5 @@ steps:
   displayName: 'dotnet pack $(buildConfiguration)'
 - script: dotnet nuget update source "azure" -u $(PAT) -p $(PAT) --configfile ./nuget.config --store-password-in-clear-text
   displayName: 'dotnet nuget add source'
-- script: dotnet nuget push --source "azure" --api-key az "./MojangApi/"
+- script: dotnet nuget push --source "azure" --api-key az ./MojangApi/bin/Release/MojangApi.*.nupkg
   displayName: 'dotnet nuget push'
