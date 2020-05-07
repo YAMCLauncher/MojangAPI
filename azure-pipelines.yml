@@ -27,10 +27,9 @@ steps:
 - bash: 'echo "##vso[task.setvariable variable=versionSuffix]+r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'pack'
-    packagesToPack: '**/*.csproj'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'versionSuffix'
+    command: 'custom'
+    custom: 'pack'
+    arguments: '--output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration) --version-suffix $(versionSuffix) --verbosity Detailed'
   displayName: 'DotNet pack $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
