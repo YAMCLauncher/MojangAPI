@@ -29,8 +29,8 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    versioningScheme: 'off'
-    buildProperties: '--version-suffix $(versionSuffix)'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'versionSuffix'
   displayName: 'DotNet pack $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
