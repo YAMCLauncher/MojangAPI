@@ -13,23 +13,23 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- bash: 'echo "##vso[task.setvariable variable=buildMeta]r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
+  displayName: 'Set Environment'
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '3.1.x'
-- bash: 'env'
-  displayName: 'Show Environment'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'DotNet build $(buildConfiguration)'
-- bash: 'echo "##vso[task.setvariable variable=versionSuffix]+r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'custom'
-    custom: 'pack'
-    arguments: '--output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration) --version-suffix $(versionSuffix) --verbosity Detailed'
+    command: 'pack'
+    packagesToPack: '.'
+    versioningScheme: 'off'
+    buildProperties: 'BuildMeta=+$(buildMeta)'
   displayName: 'DotNet pack $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
