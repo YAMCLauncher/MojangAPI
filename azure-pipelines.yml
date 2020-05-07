@@ -13,11 +13,23 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-- script: dotnet pack --configuration $(buildConfiguration)
-  displayName: 'dotnet pack $(buildConfiguration)'
-- script: dotnet nuget update source "azure" -u $(PAT) -p $(PAT) --configfile ./nuget.config --store-password-in-clear-text
-  displayName: 'dotnet nuget add source'
-- script: dotnet nuget push --source "azure" --api-key az ./MojangApi/bin/Release/MojangApi.*.nupkg
-  displayName: 'dotnet nuget push'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    configuration: '$(buildConfiguration)'
+    versioningScheme: 'byBuildNumber'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '47076755-21e7-40a0-8dbd-33da25e7b58d/a1b24536-3f4c-468f-9765-82bafcfacc67'
