@@ -19,7 +19,7 @@ steps:
 - bash: 'echo "##vso[task.setvariable variable=buildMeta]+r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
   displayName: 'Set BuildMeta'
 
-- bash: 'echo "##vso[task.setvariable variable=versionSuffix]-SNAPSHOT"'
+- bash: 'echo "##vso[task.setvariable variable=versionSuffix]-SNAPSHOT.r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
   displayName: 'Set SNAPSHOT VersionSuffix'
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 
