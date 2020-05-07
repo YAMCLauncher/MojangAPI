@@ -28,8 +28,8 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
-    configuration: '$(buildConfiguration)'
     versioningScheme: 'off'
+    buildProperties: '--version-suffix "r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
   displayName: 'DotNet pack $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
