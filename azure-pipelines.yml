@@ -17,19 +17,24 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '3.1.x'
+- bash: 'env'
+  displayName: 'Show Environment'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
+  displayName: 'DotNet build $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     configuration: '$(buildConfiguration)'
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'off'
+  displayName: 'DotNet pack $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: '47076755-21e7-40a0-8dbd-33da25e7b58d/a1b24536-3f4c-468f-9765-82bafcfacc67'
+  displayName: 'DotNet push'
