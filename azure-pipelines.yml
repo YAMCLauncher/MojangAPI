@@ -14,22 +14,32 @@ variables:
 
 steps:
 - bash: 'echo "##vso[task.setvariable variable=buildMeta]+r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
-  displayName: 'Set Environment'
+  displayName: 'Set BuildMeta'
+
+- bash: 'echo "##vso[task.setvariable variable=versionSuffix]-SNAPSHOT$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
+  displayName: 'Set SNAPSHOT VersionSuffix'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '3.1.x'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'DotNet build $(buildConfiguration)'
+  condition: succeeded()
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '.'
     versioningScheme: 'off'
   displayName: 'DotNet pack $(buildConfiguration)'
+  condition: succeeded()
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'push'
@@ -37,3 +47,4 @@ steps:
     nuGetFeedType: 'internal'
     publishVstsFeed: '47076755-21e7-40a0-8dbd-33da25e7b58d/a1b24536-3f4c-468f-9765-82bafcfacc67'
   displayName: 'DotNet push'
+  condition: or(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
