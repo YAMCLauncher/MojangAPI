@@ -24,12 +24,13 @@ steps:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
   displayName: 'DotNet build $(buildConfiguration)'
+- bash: 'echo "##vso[task.setvariable variable=versionSuffix]+r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '**/*.csproj'
     versioningScheme: 'off'
-    buildProperties: '--version-suffix "r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"'
+    buildProperties: '--version-suffix $(versionSuffix)'
   displayName: 'DotNet pack $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
