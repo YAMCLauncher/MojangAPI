@@ -12,7 +12,7 @@ namespace MojangApi.Tests
         {
             var request = new PlayernamesToUUIDsRequest(new string[]
             {
-                "chang196700"
+                "MomoYoki"
             });
             var resp = await ClientHelper.RequestRawAsync(request);
             var content = await resp.Content.ReadAsStringAsync();
@@ -25,11 +25,11 @@ namespace MojangApi.Tests
         {
             var request = new PlayernamesToUUIDsRequest(new string[]
             {
-                "chang196700"
+                "MomoYoki"
             });
             var resp = await ClientHelper.RequestAsync(request);
             Assert.True(resp.IsSuccess);
-            Assert.Equal("chang196700", resp.Content.FirstOrDefault().Name);
+            Assert.Equal("MomoYoki", resp.Content.FirstOrDefault().Name);
         }
     }
 }
