@@ -22,7 +22,7 @@ namespace MojangApi.Tests
             var request = new UUIDToNameHistoryRequest("00992bb84f6949b990dc309476a1426b");
             var resp = await ClientHelper.RequestAsync(request);
             Assert.True(resp.IsSuccess);
-            Assert.Equal("MomoYoki", resp.Content[0].Name);
+            Assert.Equal("chang196700", resp.Content[0].Name);
         }
     }
 }
